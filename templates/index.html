@@ -2,1067 +2,501 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#fff0f5">
-<title>Morning Surprise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Surprise</title>
 
 <style>
-:root {
-    --rose: #a64265;
-    --dark: #5b2438;
-    --cream: #fff7e8;
-    --pink: #fff0f5;
-}
-
 * { box-sizing: border-box; }
+
+:root {
+    --cream: #fff8f1;
+    --pink: #e7a1b0;
+    --rose: #a94f70;
+    --green: #54775b;
+}
 
 body {
     margin: 0;
-    min-height: 100vh;
-    font-family: Georgia, "Times New Roman", serif;
-    background: linear-gradient(135deg, #fff0f5, #ffe5ed, #fffaf3);
-    color: var(--dark);
+    font-family: Georgia, serif;
+    background: var(--cream);
+    color: #623c4b;
     overflow-x: hidden;
 }
 
-button { font: inherit; }
-
-button:focus-visible, input:focus-visible {
-    outline: 3px solid #c76a8a;
-    outline-offset: 3px;
-}
-
 .screen {
-    min-height: 100vh;
-    padding: 45px 32px;
+    min-height: 100svh;
     display: none;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
     position: relative;
-    z-index: 1;
+    overflow: hidden;
+    text-align: center;
+    padding: 65px 24px;
 }
 
-#intro { display: flex; overflow: hidden; }
+.screen.active { display: flex; }
 
-h1 { font-size: clamp(36px, 9vw, 68px); }
-p { line-height: 1.8; }
-
-.main-btn {
-    border: 0;
-    border-radius: 30px;
-    padding: 14px 26px;
-    background: var(--rose);
-    color: white;
-    cursor: pointer;
-    box-shadow: 0 8px 24px #a6426530;
-    transition: transform .2s, background .2s;
+/* Elegant flowers made with CSS, not emojis */
+.flower {
+    --petal: #e9a7bb;
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    display: block;
+    pointer-events: none;
 }
 
-.main-btn:hover { background: #87324f; }
-.main-btn:active { transform: scale(.97); }
+.flower .petal {
+    position: absolute;
+    width: 42%;
+    height: 42%;
+    left: 29%;
+    top: 4%;
+    border-radius: 70% 70% 45% 45%;
+    background: var(--petal);
+    transform-origin: 50% 110%;
+}
 
-.small-note { font-size: 13px; opacity: .75; }
+.flower .petal:nth-child(2) { transform: rotate(60deg); }
+.flower .petal:nth-child(3) { transform: rotate(120deg); }
+.flower .petal:nth-child(4) { transform: rotate(180deg); }
+.flower .petal:nth-child(5) { transform: rotate(240deg); }
+.flower .petal:nth-child(6) { transform: rotate(300deg); }
 
-/* ELEGANT CSS FLOWERS ON BOTH SIDES */
+.flower .center {
+    position: absolute;
+    width: 23%;
+    height: 23%;
+    border-radius: 50%;
+    left: 38.5%;
+    top: 38.5%;
+    background: #d6ad65;
+    box-shadow: 0 0 5px #fff0bd;
+}
 
-.floral-border {
+/* Flower borders stay visible on both screens */
+.side-border {
     position: fixed;
     top: 0;
     bottom: 0;
-    width: 34px;
+    width: 42px;
     z-index: 20;
     pointer-events: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
     overflow: hidden;
 }
 
-.floral-border.left { left: 0; }
-.floral-border.right { right: 0; }
+.side-border.left { left: 3px; }
+.side-border.right { right: 3px; }
 
-.side-flower {
-    position: relative;
-    width: 24px;
-    height: 24px;
-    flex: 0 0 24px;
-    animation: flowerSway 4s ease-in-out infinite;
-}
-
-.side-flower:nth-child(even) { animation-delay: -1.8s; }
-
-.side-flower::before,
-.side-flower::after {
-    content: "";
-    position: absolute;
-    width: 11px;
-    height: 17px;
+.side-border .flower {
+    width: 25px;
+    height: 25px;
     left: 6px;
-    top: 2px;
-    border-radius: 80% 20% 80% 20%;
-    background: linear-gradient(135deg, #f9b6cc, #c95880);
-    transform-origin: 50% 10px;
-    box-shadow:
-        0 0 0 1px #ffffff55,
-        0 0 8px #c9588030;
+    animation: borderSway 4s ease-in-out infinite alternate;
 }
 
-.side-flower::before {
-    transform: rotate(0deg);
-    box-shadow:
-        0 -6px 0 -2px #e9a0b9,
-        0 0 8px #c9588030;
+.side-border.right .flower {
+    left: 7px;
+    animation-delay: -2s;
 }
 
-.side-flower::after {
-    transform: rotate(90deg);
-    background: linear-gradient(135deg, #ffe4ad, #df9e58);
-    box-shadow:
-        0 6px 0 -2px #f2c3d1,
-        0 0 8px #c9588030;
+@keyframes borderSway {
+    from { transform: rotate(-12deg) scale(.9); }
+    to { transform: rotate(15deg) scale(1.08); }
 }
 
-@keyframes flowerSway {
-    0%, 100% { transform: rotate(-12deg) translateY(0); }
-    50% { transform: rotate(12deg) translateY(-5px); }
+/* INTRO */
+#intro {
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(ellipse at center, #fffdf8 0%, #fff2f2 58%, #f8dfe7 100%);
 }
 
-/* INTRO FLOWER ORBITS */
-
-#intro h1, #intro p, #intro button {
+.intro-content {
     position: relative;
-    z-index: 2;
+    z-index: 5;
+    max-width: 560px;
+    padding: 30px 12px;
 }
 
-#intro h1 {
-    margin-bottom: 5px;
-    text-shadow: 0 5px 25px #d77d9c30;
+.intro-content h1 {
+    font-size: clamp(36px, 8vw, 65px);
+    line-height: 1.1;
+    margin: 0 0 18px;
+    color: #9b536c;
+    font-weight: normal;
 }
 
-#orbitFlowers {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
+.intro-content p {
+    font-size: 17px;
+    line-height: 1.8;
+    margin: 0 auto 28px;
 }
 
+.open-button {
+    border: 1px solid #b86e87;
+    background: #a95f79;
+    color: white;
+    padding: 14px 27px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 6px 18px #a95f792e;
+}
+
+.open-button:active { transform: scale(.97); }
+
+/* Large anticlockwise flower orbits */
 .orbit {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: min(90vw, 520px);
-    height: min(90vw, 520px);
-    margin-left: min(-45vw, -260px);
-    margin-top: min(-45vw, -260px);
-    animation: orbitSpin 28s linear infinite reverse;
+    width: min(94vw, 760px);
+    aspect-ratio: 1;
+    border: 1px solid #dba9b64a;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: orbitSpin 30s linear infinite reverse;
+    pointer-events: none;
 }
 
-.orbit:nth-child(2) {
-    width: min(125vw, 760px);
-    height: min(125vw, 760px);
-    margin-left: min(-62.5vw, -380px);
-    margin-top: min(-62.5vw, -380px);
-    animation-duration: 40s;
+.orbit.two {
+    width: min(70vw, 530px);
+    animation-duration: 22s;
 }
 
-.orbit:nth-child(3) {
-    width: min(165vw, 980px);
-    height: min(165vw, 980px);
-    margin-left: min(-82.5vw, -490px);
-    margin-top: min(-82.5vw, -490px);
-    animation-duration: 52s;
+.orbit.three {
+    width: min(115vw, 920px);
+    animation-duration: 42s;
+}
+
+.orbit .flower {
+    width: 48px;
+    height: 48px;
+    left: 50%;
+    top: -24px;
+    margin-left: -24px;
+}
+
+.orbit.two .flower {
+    width: 35px;
+    height: 35px;
+    top: -17px;
+    margin-left: -17px;
+    --petal: #dca0b5;
+}
+
+.orbit.three .flower {
+    width: 30px;
+    height: 30px;
+    top: -15px;
+    margin-left: -15px;
+    --petal: #e6c18c;
 }
 
 @keyframes orbitSpin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-.orbit-flower {
-    position: absolute;
-    width: 42px;
-    height: 42px;
-    left: 50%;
-    top: 0;
-    transform: translateX(-50%);
+/* PHOTO GALLERY */
+#gallery {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 35px;
+    background:
+        radial-gradient(ellipse at top, #fffdf8, #f9e8e8 85%);
+    padding-top: 70px;
+    padding-bottom: 70px;
 }
 
-.orbit-flower .petal {
-    position: absolute;
-    width: 15px;
-    height: 23px;
-    left: 13px;
-    top: 0;
-    border-radius: 80% 80% 45% 45%;
-    background: linear-gradient(145deg, #fff7fa, #e69ab6);
-    transform-origin: 50% 21px;
-    box-shadow: 0 2px 7px #b94d7330;
-}
+#gallery.active { display: flex; }
 
-.orbit-flower .petal:nth-child(2) { transform: rotate(60deg); }
-.orbit-flower .petal:nth-child(3) { transform: rotate(120deg); }
-.orbit-flower .petal:nth-child(4) { transform: rotate(180deg); }
-.orbit-flower .petal:nth-child(5) { transform: rotate(240deg); }
-.orbit-flower .petal:nth-child(6) { transform: rotate(300deg); }
-
-.orbit-flower .center {
-    position: absolute;
-    left: 17px;
-    top: 15px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #fff2bd, #d9a34b);
-}
-
-/* ENVELOPE */
-
-#letterScreen { gap: 12px; }
-
-.envelope-wrapper {
-    cursor: pointer;
-    animation: floatEnvelope 3s ease-in-out infinite;
-}
-
-.envelope {
+.gallery-heading {
     position: relative;
-    width: min(290px, 75vw);
-    height: 185px;
-    border-radius: 8px;
-    background: #f4b2c8;
-    box-shadow: 0 20px 45px #7c294830;
-    overflow: hidden;
+    z-index: 2;
+    padding: 0 20px;
 }
 
-.envelope::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: #e995b2;
-    clip-path: polygon(0 0, 50% 56%, 100% 0);
+.gallery-heading h2 {
+    font-size: clamp(30px, 6vw, 48px);
+    font-weight: normal;
+    margin: 0 0 10px;
+    color: #96536b;
+}
+
+.gallery-heading p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* Twine */
+.photo-line {
+    width: min(900px, 88vw);
+    height: 3px;
+    background: #a88765;
+    transform: rotate(-2deg);
+    border-radius: 50%;
+    box-shadow: 0 2px 2px #80624733;
+    margin-top: 12px;
+}
+
+.photo-row {
+    width: min(1000px, 88vw);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: clamp(12px, 3vw, 35px);
+    margin-top: -48px;
+    position: relative;
     z-index: 2;
 }
 
-.envelope::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: #f9c7d6;
-    clip-path: polygon(0 100%, 50% 45%, 100% 100%);
-    z-index: 3;
-}
-
-.heart-seal {
-    position: absolute;
-    z-index: 5;
-    left: 50%;
-    top: 53%;
-    transform: translate(-50%, -50%);
-    font-size: 38px;
-    color: #a64265;
-}
-
-@keyframes floatEnvelope {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-9px); }
-}
-
-/* FLOWER PETALS */
-
-#fallingFlowers {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.falling-petal {
-    position: absolute;
-    top: -40px;
-    width: 13px;
-    height: 20px;
-    border-radius: 80% 20% 80% 20%;
-    background: linear-gradient(135deg, #fff6fa, #dc85a4);
-    animation: fallPetal linear infinite;
-    opacity: .6;
-}
-
-@keyframes fallPetal {
-    0% { transform: translate(0, -5vh) rotate(0); }
-    50% { transform: translate(35px, 50vh) rotate(180deg); }
-    100% { transform: translate(-20px, 110vh) rotate(360deg); }
-}
-
-/* VINTAGE LETTER */
-
-#letterContent {
-    align-items: center;
-    padding: 42px 38px 70px;
-}
-
-.letter-card {
-    width: 100%;
-    max-width: 760px;
-    padding: clamp(25px, 6vw, 55px);
-    border: 1px solid #ddc8a6;
-    background:
-        radial-gradient(ellipse at 15% 10%, #fffdf2aa, transparent 45%),
-        radial-gradient(ellipse at 90% 85%, #e7cda344, transparent 50%),
-        linear-gradient(120deg, #f8edda, #fff8e9 45%, #f3e4c9);
-    color: #61452f;
-    box-shadow: 0 18px 55px #79533430;
-    line-height: 1.9;
+.photo-card {
+    width: 33.333%;
+    max-width: 270px;
     position: relative;
-}
-
-.letter-card::before {
-    content: "";
-    position: absolute;
-    inset: 10px;
-    border: 1px solid #c9ac8066;
-    pointer-events: none;
-}
-
-.letter-card h2 {
-    font-family: "Brush Script MT", "Segoe Script", cursive;
-    font-weight: normal;
-    font-size: clamp(30px, 6vw, 43px);
-    margin: 0 0 20px;
-}
-
-.letter-text {
-    font-family: "Segoe Script", "Brush Script MT", cursive;
-    text-align: left;
-    white-space: pre-line;
-    font-size: clamp(17px, 3.5vw, 21px);
-    line-height: 2;
-}
-
-/* CSS BOUQUET */
-
-.bouquet {
-    position: relative;
-    width: 210px;
-    height: 180px;
-    margin: 25px auto 0;
-}
-
-.css-rose {
-    position: absolute;
-    width: 54px;
-    height: 54px;
-    left: calc(50% - 27px);
-    top: 22px;
-    border-radius: 50%;
-    background:
-        radial-gradient(ellipse at 50% 50%, #b34469 0 13%, transparent 14%),
-        repeating-radial-gradient(ellipse at 50% 50%,
-            #f9c1d0 0 6px, #d9688e 7px 12px, #f5a8bf 13px 18px);
-    box-shadow: 0 4px 12px #a6426530;
-}
-
-.css-rose.r1 { left: 20px; top: 45px; transform: scale(.8); }
-.css-rose.r2 { left: 135px; top: 45px; transform: scale(.85); }
-.css-rose.r3 { left: 52px; top: 0; transform: scale(.75); }
-.css-rose.r4 { left: 100px; top: 5px; transform: scale(.9); }
-
-.bouquet-stem {
-    position: absolute;
-    left: 50%;
-    top: 72px;
-    height: 90px;
-    width: 4px;
-    background: #71936a;
-    transform: rotate(7deg);
-}
-
-.bouquet-stem::before, .bouquet-stem::after {
-    content: "";
-    position: absolute;
-    width: 26px;
-    height: 12px;
-    top: 25px;
-    left: -24px;
-    border-radius: 100% 0 100% 0;
-    background: #789c70;
-    transform: rotate(-25deg);
-}
-
-.bouquet-stem::after {
-    left: 2px;
-    top: 45px;
-    transform: rotate(45deg) scaleX(-1);
-}
-
-.bouquet-ribbon {
-    position: absolute;
-    left: calc(50% - 23px);
-    top: 110px;
-    width: 46px;
-    height: 22px;
-    background: #bd5577;
-    clip-path: polygon(0 0, 35% 20%, 50% 0, 65% 20%, 100% 0, 85% 75%, 100% 100%, 50% 78%, 0 100%, 15% 75%);
-}
-
-/* HANGING PHOTOS */
-
-.photo-gallery {
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    gap: clamp(10px, 3vw, 24px);
-    width: 100%;
-    margin: 38px auto;
-    padding-top: 35px;
-}
-
-.photo-gallery::before {
-    content: "";
-    position: absolute;
-    height: 3px;
-    top: 13px;
-    left: 0;
-    right: 0;
-    background: #ad865d;
-    border-radius: 50%;
-    box-shadow: 0 2px 3px #6a452b25;
-}
-
-.photo-frame {
-    position: relative;
-    flex: 1 1 0;
-    min-width: 0;
-    max-width: 190px;
-    padding: 5px;
-    background: #fffdf7;
-    box-shadow: 0 6px 18px #6a452b25;
+    padding-top: 30px;
     transform: rotate(-2deg);
+    transition: transform .3s ease;
     cursor: pointer;
-    transition: transform .25s;
 }
 
-.photo-frame:nth-child(2) { transform: rotate(2deg); }
-.photo-frame:nth-child(3) { transform: rotate(-1deg); }
-.photo-frame:hover { transform: translateY(-5px) rotate(0); }
+.photo-card:nth-child(2) {
+    transform: rotate(2deg);
+    padding-top: 45px;
+}
 
-.photo-frame img {
+.photo-card:nth-child(3) { transform: rotate(-1deg); }
+
+.photo-card:hover { transform: translateY(-5px) rotate(0deg); }
+
+/* Tiny wooden peg */
+.peg {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) rotate(3deg);
+    width: 15px;
+    height: 36px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #a77b4d, #e1c29a, #9a6d43);
+    border: 1px solid #96704b;
+    z-index: 3;
+    box-shadow: 1px 2px 3px #68472c44;
+}
+
+.photo-card img {
     display: block;
     width: 100%;
     aspect-ratio: 3 / 4;
     object-fit: cover;
+    padding: 8px 8px 20px;
+    background: #fffdf9;
+    box-shadow: 0 7px 18px #68434b25;
+    border: 1px solid #eadfd5;
 }
 
-.photo-frame::before {
-    content: "";
-    position: absolute;
-    width: 13px;
-    height: 25px;
-    top: -31px;
-    left: calc(50% - 6px);
-    background: linear-gradient(90deg, #c28e53, #f1d4a1, #a97a43);
-    border-radius: 2px 2px 5px 5px;
-    box-shadow: 0 2px 3px #60402030;
-    z-index: 2;
+.photo-card span {
+    display: block;
+    padding: 10px 3px 0;
+    font-size: 13px;
+    color: #986579;
 }
 
-.photo-hint { font-size: 13px; opacity: .7; }
-
-#photoModal {
-    display: none;
+/* Tap-to-enlarge viewer */
+#viewer {
     position: fixed;
     inset: 0;
+    background: #21161deF;
     z-index: 100;
-    background: #28131feF;
-    justify-content: center;
+    display: none;
     align-items: center;
-    padding: 22px;
+    justify-content: center;
+    padding: 25px;
+    cursor: pointer;
 }
 
-#photoModal.open { display: flex; }
+#viewer.open { display: flex; }
 
-#photoModal img {
-    max-width: 95%;
-    max-height: 85vh;
+#viewer img {
+    max-width: 92vw;
+    max-height: 85svh;
     object-fit: contain;
-    border-radius: 8px;
+    background: white;
+    padding: 8px;
     box-shadow: 0 10px 40px #0006;
 }
 
-#closePhoto {
+.close-note {
     position: absolute;
-    right: 20px;
-    top: 15px;
-    border: 0;
-    background: #ffffff22;
+    top: 18px;
+    right: 18px;
     color: white;
-    font-size: 30px;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    cursor: pointer;
+    font-size: 14px;
+    letter-spacing: 1px;
 }
 
-/* MUSIC */
-
-.music-box, .quiz-card {
-    width: 100%;
-    max-width: 520px;
-    padding: clamp(24px, 5vw, 38px);
-    background: #fffafc;
-    border: 1px solid #f3d6e0;
-    border-radius: 25px;
-    box-shadow: 0 15px 40px #6b284030;
-}
-
-.music-box h1 { font-size: clamp(29px, 7vw, 44px); }
-.music-box p { line-height: 1.8; }
-
-audio {
-    width: 100%;
-    margin: 20px 0;
-}
-
-.music-button {
-    border: 0;
-    padding: 13px 24px;
-    border-radius: 30px;
-    background: var(--rose);
-    color: white;
-    cursor: pointer;
-    margin-top: 12px;
-}
-
-/* QUIZ */
-
-.quiz-card { text-align: left; }
-.quiz-card h2 { text-align: center; font-size: 30px; }
-.quiz-intro { font-size: 14px; line-height: 1.7; }
-
-.quiz-question {
-    margin: 25px 0;
-    line-height: 1.6;
-}
-
-.quiz-question strong { display: block; margin-bottom: 10px; }
-
-.quiz-option {
-    display: block;
-    padding: 12px;
-    margin-top: 9px;
-    border: 1px solid #e8b5c6;
-    border-radius: 12px;
-    cursor: pointer;
-}
-
-.quiz-option:has(input:checked) {
-    background: #f9dce6;
-    border-color: var(--rose);
-}
-
-.quiz-option input {
-    margin-right: 8px;
-    accent-color: var(--rose);
-}
-
-#quizMessage {
-    text-align: center;
-    line-height: 1.8;
-}
-
-@media (max-width: 480px) {
-    .screen { padding-left: 30px; padding-right: 30px; }
-    #letterContent { padding-left: 30px; padding-right: 30px; }
-    .floral-border { width: 23px; }
-    .side-flower { transform: scale(.8); }
-    .photo-gallery { gap: 8px; }
-    .photo-frame { padding: 3px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
+@media (max-width: 520px) {
+    .side-border { width: 27px; }
+    .side-border .flower {
+        left: 0;
+        width: 21px;
+        height: 21px;
     }
+
+    .photo-row {
+        width: 91vw;
+        gap: 9px;
+    }
+
+    .photo-card { padding-top: 25px; }
+    .photo-card:nth-child(2) { padding-top: 38px; }
+    .photo-card img { padding: 5px 5px 14px; }
+    .peg { width: 12px; height: 29px; }
+    .photo-card span { font-size: 11px; }
+    #gallery { gap: 30px; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- CONSISTENT FLORAL BORDERS -->
-<div class="floral-border left" aria-hidden="true">
-    <span class="side-flower"></span><span class="side-flower"></span>
-    <span class="side-flower"></span><span class="side-flower"></span>
-    <span class="side-flower"></span><span class="side-flower"></span>
-    <span class="side-flower"></span><span class="side-flower"></span>
-</div>
-<div class="floral-border right" aria-hidden="true">
-    <span class="side-flower"></span><span class="side-flower"></span>
-    <span class="side-flower"></span><span class="side-flower"></span>
-    <span class="side-flower"></span><span class="side-flower"></span>
-    <span class="side-flower"></span><span class="side-flower"></span>
-</div>
+<!-- Permanent decorative flower borders -->
+<div class="side-border left" id="leftBorder"></div>
+<div class="side-border right" id="rightBorder"></div>
 
-<!-- INTRO -->
-<section id="intro" class="screen">
-    <div id="orbitFlowers" aria-hidden="true"></div>
-    <h1>Hello My Hayat</h1>
-    <p>A little surprise is waiting for you.</p>
-    <button class="main-btn" onclick="startSurprise()">Tap to open</button>
-</section>
+<!-- INTRO SCREEN -->
+<section class="screen active" id="intro">
 
-<!-- ENVELOPE -->
-<section id="letterScreen" class="screen">
-    <div class="envelope-wrapper" onclick="openLetter()" role="button" tabindex="0"
-         aria-label="Open the letter">
-        <div class="envelope"><div class="heart-seal">♥</div></div>
+    <div class="orbit">
+        <span class="flower">
+            <i class="petal"></i><i class="petal"></i>
+            <i class="petal"></i><i class="petal"></i>
+            <i class="petal"></i><i class="petal"></i>
+            <i class="center"></i>
+        </span>
     </div>
-    <h2>Something is waiting for you</h2>
-    <p>Tap the letter to open it.</p>
-</section>
 
-<div id="fallingFlowers" aria-hidden="true"></div>
-
-<!-- LETTER -->
-<section id="letterContent" class="screen">
-    <div class="letter-card">
-        <h2>An apology and a proud message from me</h2>
-
-        <div class="letter-text">Dear My Lady,
-
-Thank you for being the best person, thank you for always being by my side. I'm so thankful, and I'm really so proud of you. You will always be my moon and a bestie, more than a friend and a bestie.
-
-I wanna let you know that I'm sorry. I don't know how days are going so busy, but even when you are busy, don't forget to eat well. Give your body rest as well. No need to overpush, okie?
-
-I hope this reaches you. I'll always be praying for you.
-
-I love you, every moment and second will I.</div>
-
-        <div class="bouquet" aria-label="A flower bouquet">
-            <div class="css-rose"></div>
-            <div class="css-rose r1"></div>
-            <div class="css-rose r2"></div>
-            <div class="css-rose r3"></div>
-            <div class="css-rose r4"></div>
-            <div class="bouquet-stem"></div>
-            <div class="bouquet-ribbon"></div>
-        </div>
-        <p>Only for you, my lady.</p>
-
-        <h3>Little memories</h3>
-        <div class="photo-gallery">
-            <div class="photo-frame">
-                <img src="{{ url_for('static', filename='photo.jpg') }}"
-                     alt="Memory one" loading="lazy">
-            </div>
-            <div class="photo-frame">
-                <img src="{{ url_for('static', filename='photo2.jpg') }}"
-                     alt="Memory two" loading="lazy">
-            </div>
-            <div class="photo-frame">
-                <img src="{{ url_for('static', filename='photo3.jpg') }}"
-                     alt="Memory three" loading="lazy">
-            </div>
-        </div>
-        <p class="photo-hint">Tap any photo to see it larger.</p>
-
-        <button class="main-btn" onclick="showSongOne()">Continue</button>
+    <div class="orbit two">
+        <span class="flower">
+            <i class="petal"></i><i class="petal"></i>
+            <i class="petal"></i><i class="petal"></i>
+            <i class="petal"></i><i class="petal"></i>
+            <i class="center"></i>
+        </span>
     </div>
-</section>
 
-<!-- PHOTO ENLARGEMENT -->
-<div id="photoModal" role="dialog" aria-modal="true"
-     aria-label="Enlarged photo" onclick="closePhoto()">
-    <button id="closePhoto" aria-label="Close photo"
-            onclick="closePhoto()">×</button>
-    <img id="enlargedPhoto" src="" alt="Enlarged memory">
-</div>
+    <div class="orbit three">
+        <span class="flower">
+            <i class="petal"></i><i class="petal"></i>
+            <i class="petal"></i><i class="petal"></i>
+            <i class="petal"></i><i class="petal"></i>
+            <i class="center"></i>
+        </span>
+    </div>
 
-<!-- SONG ONE -->
-<section id="songOne" class="screen">
-    <div class="music-box">
-        <h1>This song best describes you.</h1>
-        <p>I hope you listen to it and understand why I chose it for you.</p>
-        <audio id="musicOne" controls preload="metadata">
-            <source src="{{ url_for('static', filename='music.mp3') }}"
-                    type="audio/mpeg">
-        </audio>
-        <button id="songOneNext" class="music-button"
-                onclick="showSongTwo()" style="display:none">
-            Next song
+    <div class="intro-content">
+        <h1>Hello, My Hayat</h1>
+        <p>
+            A little corner of the world made just for you.
+            Take a breath, smile a little, and come see
+            what I've kept here for you.
+        </p>
+        <button class="open-button" id="openGallery">
+            Open your little surprise
         </button>
     </div>
 </section>
 
-<!-- SONG TWO -->
-<section id="songTwo" class="screen">
-    <div class="music-box">
-        <h1>And this one...</h1>
-        <p>This one reminds me of you.</p>
-        <audio id="musicTwo" controls preload="metadata">
-            <source src="{{ url_for('static', filename='music2.mp3') }}"
-                    type="audio/mpeg">
-        </audio>
-        <button class="music-button" onclick="finishSurprise()">Finish</button>
+<!-- PHOTO GALLERY ONLY -->
+<section class="screen" id="gallery">
+
+    <div class="gallery-heading">
+        <h2>Little Moments</h2>
+        <p>Some memories deserve their own little place.</p>
+    </div>
+
+    <div class="photo-line"></div>
+
+    <div class="photo-row">
+        <div class="photo-card">
+            <div class="peg"></div>
+            <img src="{{ url_for('static', filename='photo.jpg') }}"
+                 alt="Memory one" class="gallery-photo">
+            <span>A little memory</span>
+        </div>
+
+        <div class="photo-card">
+            <div class="peg"></div>
+            <img src="{{ url_for('static', filename='photo2.jpg') }}"
+                 alt="Memory two" class="gallery-photo">
+            <span>A precious moment</span>
+        </div>
+
+        <div class="photo-card">
+            <div class="peg"></div>
+            <img src="{{ url_for('static', filename='photo3.jpg') }}"
+                 alt="Memory three" class="gallery-photo">
+            <span>One to remember</span>
+        </div>
     </div>
 </section>
 
-<!-- ENDING -->
-<section id="ending" class="screen">
-    <h1>That's all.</h1>
-    <p>I hope this little surprise made your morning a little more special.</p>
-    <button class="main-btn" onclick="openQuiz()">One little quiz for you</button>
-</section>
-
-<!-- QUIZ -->
-<section id="quizScreen" class="screen">
-    <div class="quiz-card">
-        <h2>A little quiz about me</h2>
-        <p class="quiz-intro">
-            Let's see how well you know me. Your answers and score will be
-            saved and shared with the person who made this surprise.
-        </p>
-
-        <form id="quizForm">
-            <div id="quizQuestions"></div>
-            <button id="submitQuiz" class="main-btn" type="submit">
-                Submit answers
-            </button>
-        </form>
-        <p id="quizMessage" role="status"></p>
-    </div>
-</section>
+<!-- Enlarged photo viewer -->
+<div id="viewer" aria-label="Enlarged photo viewer">
+    <span class="close-note">TAP ANYWHERE TO CLOSE</span>
+    <img id="enlargedPhoto" src="" alt="Enlarged memory">
+</div>
 
 <script>
-/* CREATE DECORATIVE REALISTIC-STYLE CSS FLOWERS */
-function makeFlower(className) {
-    const flower = document.createElement("div");
-    flower.className = className;
+function makeFlower(parent, top, delay) {
+    const flower = document.createElement("span");
+    flower.className = "flower";
+    flower.style.top = top + "%";
+    flower.style.animationDelay = delay + "s";
 
-    for (let i = 0; i < 6; i++) {
-        const petal = document.createElement("span");
-        petal.className = "petal";
-        flower.appendChild(petal);
-    }
+    flower.innerHTML = `
+        <i class="petal"></i><i class="petal"></i>
+        <i class="petal"></i><i class="petal"></i>
+        <i class="petal"></i><i class="petal"></i>
+        <i class="center"></i>
+    `;
 
-    const center = document.createElement("span");
-    center.className = "center";
-    flower.appendChild(center);
-    return flower;
+    parent.appendChild(flower);
 }
 
-function createOrbitFlowers() {
-    const root = document.getElementById("orbitFlowers");
+const leftBorder = document.getElementById("leftBorder");
+const rightBorder = document.getElementById("rightBorder");
 
-    for (let ring = 0; ring < 3; ring++) {
-        const orbit = document.createElement("div");
-        orbit.className = "orbit";
-
-        for (let i = 0; i < 10; i++) {
-            const flower = makeFlower("orbit-flower");
-            flower.style.top = (i * 10) + "%";
-            flower.style.left = "50%";
-            flower.style.transform =
-                "translate(-50%, -50%) rotate(" + (i * 36) + "deg)";
-            orbit.appendChild(flower);
-        }
-
-        root.appendChild(orbit);
-    }
-}
-createOrbitFlowers();
-
-/* SCREEN FLOW */
-let letterOpened = false;
-let surpriseStarted = false;
-
-function hideScreens() {
-    document.querySelectorAll(".screen").forEach(screen => {
-        screen.style.display = "none";
-    });
+for (let i = 0; i < 12; i++) {
+    makeFlower(leftBorder, 3 + i * 8.5, -i * 0.3);
+    makeFlower(rightBorder, 7 + i * 8.5, -i * 0.4);
 }
 
-function startSurprise() {
-    if (surpriseStarted) return;
-    surpriseStarted = true;
-
-    document.getElementById("intro").style.display = "none";
-    document.getElementById("letterScreen").style.display = "flex";
-}
-
-function openLetter() {
-    if (letterOpened) return;
-    letterOpened = true;
-
-    document.getElementById("letterScreen").style.display = "none";
-    document.getElementById("letterContent").style.display = "flex";
-    startFallingFlowers();
-    window.scrollTo(0, 0);
-}
-
-document.querySelector(".envelope-wrapper").addEventListener("keydown", e => {
-    if (e.key === "Enter" || e.key === " ") {
-    e.preventDefault();
-        openLetter();
-    }
+document.getElementById("openGallery").addEventListener("click", () => {
+    document.getElementById("intro").classList.remove("active");
+    document.getElementById("gallery").classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-function startFallingFlowers() {
-    const container = document.getElementById("fallingFlowers");
-    if (container.childElementCount) return;
+const viewer = document.getElementById("viewer");
+const enlargedPhoto = document.getElementById("enlargedPhoto");
 
-    for (let i = 0; i < 24; i++) {
-        const petal = document.createElement("div");
-        petal.className = "falling-petal";
-        petal.style.left = Math.random() * 100 + "%";
-        petal.style.animationDuration = (7 + Math.random() * 8) + "s";
-        petal.style.animationDelay = (-Math.random() * 12) + "s";
-        container.appendChild(petal);
-    }
-  
-function showSongOne() {
-    document.getElementById("musicOne").pause();
-    hideScreens();
-    document.getElementById("songOne").style.display = "flex";
-    window.scrollTo(0, 0);
-}
-
-function showSongTwo() {
-    document.getElementById("musicOne").pause();
-    hideScreens();
-    document.getElementById("songTwo").style.display = "flex";
-    window.scrollTo(0, 0);
-}
-
-function finishSurprise() {
-    document.getElementById("musicTwo").pause();
-    hideScreens();
-    document.getElementById("ending").style.display = "flex";
-    window.scrollTo(0, 0);
-}
-
-document.getElementById("musicOne").addEventListener("ended", () => {
-    document.getElementById("songOneNext").style.display = "inline-block";
-});
-
-document.getElementById("musicTwo").addEventListener("ended", finishSurprise);
-
-
-/* PHOTO ENLARGEMENT */
-
-document.querySelectorAll(".photo-frame img").forEach(img => {
-    img.addEventListener("click", () => {
-        document.getElementById("enlargedPhoto").src = img.src;
-        document.getElementById("photoModal").classList.add("open");
+document.querySelectorAll(".gallery-photo").forEach(photo => {
+    photo.addEventListener("click", () => {
+        enlargedPhoto.src = photo.src;
+        viewer.classList.add("open");
     });
 });
 
-function closePhoto() {
-    document.getElementById("photoModal").classList.remove("open");
-    document.getElementById("enlargedPhoto").src = "";
-}
-
-document.addEventListener("keydown", e => {
-    if (e.key === "Escape") closePhoto();
+viewer.addEventListener("click", () => {
+    viewer.classList.remove("open");
+    enlargedPhoto.src = "";
 });
-
-
-/* QUIZ QUESTIONS */
-
-const quizQuestions = [
-    {
-        question: "What do I call you in my letter?",
-        options: ["My Lady", "Princess", "Sunshine"],
-        answer: 0
-    },
-    {
-        question: "What did I make for you?",
-        options: ["A website surprise", "A game", "A slideshow"],
-        answer: 0
-    },
-    {
-        question: "How many songs did I choose?",
-        options: ["One", "Two", "Four"],
-        answer: 1
-    },
-    {
-        question: "What do I remind you to do when life gets busy?",
-        options: [
-            "Skip meals",
-            "Eat well and rest",
-            "Stay busy all day"
-        ],
-        answer: 1
-    },
-    {
-        question: "What do I hope this surprise does?",
-        options: [
-            "Make you smile",
-            "Make you study",
-            "Test your coding"
-        ],
-        answer: 0
-    }
-];
-
-function openQuiz() {
-    hideScreens();
-
-    document.getElementById("quizScreen").style.display = "flex";
-
-    const container = document.getElementById("quizQuestions");
-
-    container.innerHTML = quizQuestions.map((q, i) => `
-        <div class="quiz-question">
-            <strong>${i + 1}. ${q.question}</strong>
-            ${q.options.map((option, j) => `
-                <label class="quiz-option">
-                    <input type="radio"
-                           name="question${i}"
-                           value="${j}" required>
-                    ${option}
-                </label>
-            `).join("")}
-        </div>
-    `).join("");
-
-    window.scrollTo(0, 0);
-}
-
-
-/* FIREBASE CONFIGURATION
-   We'll fill these values from your Firebase project.
-*/
-
-const firebaseConfig = {
-    apiKey: "PASTE_YOUR_API_KEY",
-    authDomain: "PASTE_YOUR_PROJECT.firebaseapp.com",
-    projectId: "PASTE_YOUR_PROJECT_ID",
-    storageBucket: "PASTE_YOUR_STORAGE_BUCKET",
-    messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID",
-    appId: "PASTE_YOUR_APP_ID"
-};
-
-let saveQuizSubmission = null;
-let firebaseReady = false;
-
-async function setupFirebase() {
-    if (
-        firebaseConfig.apiKey.startsWith("PASTE_") ||
-        firebaseConfig.projectId.startsWith("PASTE_")
-    ) {
-        console.log("Firebase configuration is not added yet.");
-        return;
-    }
-
-    try {
-        const { initializeApp } = await import(
-            "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"
-        );
-
-        const {
-            getFirestore,
-            collection,
-            addDoc,
-            serverTimestamp
-        } = await import(
-            "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js"
-        );
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        saveQuizSubmission = async data => {
-            return addDoc(collection(db, "quizSubmissions"), {
-                ...data,
-                submittedAt: serverTimestamp()
-            });
-        };
-
-        firebaseReady = true;
-        console.log("Firebase connected.");
-
-    } catch (error) {
-        console.error("Firebase setup failed:", error);
-    }
-}
-
-setupFirebase();
-
-
-/* QUIZ SUBMISSION */
-
-document.getElementById("quizForm").addEventListener("submit", async e => {
-    e.preventDefault();
-
-    const submitButton = document.getElementById("submitQuiz");
-    const message = document.getElementById("quizMessage");
-
-    submitButton.disabled = true;
-    message.textContent = "Submitting your answers...";
-
-    let score = 0;
-    const answers = [];
-
-    quizQuestions.forEach((q, i) => {
-        const selected = document.querySelector(
-            `input[name="question${i}"]:checked`
-        );
-
-        const selectedIndex = Number(selected.value);
-        const isCorrect = selectedIndex === q.answer;
-
-        if (isCorrect) score++;
-
-        answers.push({
-            question: q.question,
-            selectedAnswer: q.options[selectedIndex],
-            correctAnswer: q.options[q.answer],
-            correct: isCorrect
-        });
-    });
-
-    if (!firebaseReady || !saveQuizSubmission) {
-        message.textContent =
-            "Your score is " + score + " out of " +
-            quizQuestions.length +
-            ". Online saving isn't set up yet.";
-
-        submitButton.disabled = false;
-        return;
-    }
-
-    try {
-        await saveQuizSubmission({
-            answers: answers,
-            score: score,
-            totalQuestions: quizQuestions.length,
-            quizVersion: 1
-        });
-
-        document.getElementById("quizForm").style.display = "none";
-
-        message.textContent =
-            "Thank you for playing! You scored " + score +
-            " out of " + quizQuestions.length +
-            ". Your answers have been submitted.";
-
-    } catch (error) {
-        console.error("Quiz submission failed:", error);
-
-        message.textContent =
-            "Your answers couldn't be submitted. Please try again.";
-
-        submitButton.disabled = false;
-    }
-});
-
 </script>
 
 </body>
