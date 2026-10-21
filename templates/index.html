@@ -10,714 +10,243 @@
     box-sizing: border-box;
 }
 
-:root {
-    --pink: #e75480;
-    --deep-pink: #a83260;
-    --text: #5b2438;
-    --petal: #ffb8d0;
-}
-
 body {
     margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(145deg, #fff6fa, #fbe5ed, #fff9f5);
+    color: #754358;
     font-family: Georgia, serif;
-    color: var(--text);
-    background: linear-gradient(135deg, #fff0f5, #ffe1eb, #fff8fb);
-    overflow-x: hidden;
+    text-align: center;
 }
 
 .screen {
-    min-height: 100vh;
-    width: 100%;
     display: none;
+    min-height: 100vh;
+    padding: 55px 24px;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    text-align: center;
-    padding: 45px 34px;
-    position: relative;
+    animation: fadeIn 0.8s ease;
 }
 
 #intro {
     display: flex;
-    overflow: hidden;
-    isolation: isolate;
 }
 
 h1, h2 {
-    color: var(--deep-pink);
-    text-shadow: 0 3px 15px #ffc1d7;
-}
-
-h1 {
-    font-size: clamp(35px, 8vw, 54px);
-    margin-bottom: 15px;
-}
-
-h2 {
-    font-size: clamp(28px, 7vw, 42px);
+    color: #a54e73;
 }
 
 p {
-    line-height: 1.8;
+    line-height: 1.9;
 }
 
-.main-btn {
+button {
     border: none;
-    border-radius: 35px;
-    padding: 14px 30px;
-    margin-top: 18px;
-    font-family: Georgia, serif;
-    font-size: 16px;
+    border-radius: 30px;
+    padding: 13px 25px;
+    margin: 15px 5px;
+    background: #c76b91;
     color: white;
-    background: linear-gradient(135deg, #f47da2, #bc3769);
-    box-shadow: 0 8px 25px #e7548055;
+    font-size: 15px;
     cursor: pointer;
-    transition: transform .25s ease;
+    box-shadow: 0 5px 18px #b96d8b30;
 }
 
-.main-btn:active {
-    transform: scale(.96);
+button:active {
+    transform: scale(0.97);
 }
 
-.content-card {
-    width: min(100%, 570px);
-    padding: 28px 22px;
-    border-radius: 24px;
-    background: #ffffffc9;
-    box-shadow: 0 12px 35px #bd527322;
+.flower-orbit {
+    width: 210px;
+    height: 210px;
+    margin: 20px auto;
     position: relative;
-    z-index: 2;
-}
-
-.hidden {
-    display: none !important;
-}
-
-/* =================================
-   CSS FLOWERS — NO FLOWER EMOJIS
-================================= */
-
-.flower {
-    --flower-size: 46px;
-    position: relative;
-    width: var(--flower-size);
-    height: var(--flower-size);
-    flex: 0 0 auto;
-}
-
-.flower .petal {
-    position: absolute;
-    width: 37%;
-    height: 45%;
-    left: 31.5%;
-    top: 5%;
-    border-radius: 50% 50% 42% 42%;
-    transform-origin: 50% 100%;
-    background: linear-gradient(135deg, #fff0f5, #ed83ad);
-    box-shadow: inset -2px -3px 5px #b93d6c22;
-}
-
-.flower .petal:nth-child(1) { transform: rotate(0deg); }
-.flower .petal:nth-child(2) { transform: rotate(60deg); }
-.flower .petal:nth-child(3) { transform: rotate(120deg); }
-.flower .petal:nth-child(4) { transform: rotate(180deg); }
-.flower .petal:nth-child(5) { transform: rotate(240deg); }
-.flower .petal:nth-child(6) { transform: rotate(300deg); }
-
-.flower .center {
-    position: absolute;
-    width: 24%;
-    height: 24%;
-    top: 38%;
-    left: 38%;
+    border: 1px solid #e8b8ca;
     border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #fff4bc, #e9a33d);
-    box-shadow: 0 0 5px #d99a4b77;
+    animation: orbit 18s linear infinite;
 }
 
-.flower.rose .petal {
-    background: linear-gradient(135deg, #ffd6e4, #df477e);
-}
-
-.flower.ivory .petal {
-    background: linear-gradient(135deg, #fffdf6, #eec7d3);
-}
-
-.flower.lilac .petal {
-    background: linear-gradient(135deg, #f7e6ff, #b78ad5);
-}
-
-.flower.gold .petal {
-    background: linear-gradient(135deg, #fff4be, #e9ad58);
-}
-
-/* =================================
-   ANTICLOCKWISE ORBIT INTRO
-================================= */
-
-.flower-orbits {
+.orbit-flower {
     position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 0;
+    font-size: 27px;
 }
 
-.orbit {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: min(82vw, 390px);
-    aspect-ratio: 1;
-    border: 1px solid #e7a0b855;
-    border-radius: 50%;
-    animation: orbitSpin 24s linear infinite;
+.orbit-flower:nth-child(1) { top: -14px; left: 88px; }
+.orbit-flower:nth-child(2) { right: -12px; top: 87px; }
+.orbit-flower:nth-child(3) { bottom: -12px; left: 88px; }
+.orbit-flower:nth-child(4) { left: -12px; top: 87px; }
+
+@keyframes orbit {
+    to { transform: rotate(-360deg); }
 }
 
-.orbit:nth-child(2) {
-    width: min(112vw, 550px);
-    animation-duration: 34s;
+.envelope {
+    font-size: 65px;
+    cursor: pointer;
 }
 
-.orbit:nth-child(3) {
-    width: min(145vw, 720px);
-    animation-duration: 45s;
+.letter-card {
+    max-width: 600px;
+    padding: 28px 23px;
+    border-radius: 20px;
+    background: #ffffffb8;
+    box-shadow: 0 10px 35px #87405d18;
+    line-height: 1.9;
 }
 
-@keyframes orbitSpin {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to { transform: translate(-50%, -50%) rotate(-360deg); }
+.photo-gallery {
+    width: 100%;
+    max-width: 600px;
+    margin: 35px auto;
+    padding: 0 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
 }
 
-.orbit .flower {
-    --flower-size: 47px;
-    position: absolute;
-    top: -24px;
-    left: 50%;
-    transform: translateX(-50%);
-    filter: drop-shadow(0 5px 8px #c75b8055);
+.photo-gallery img {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    max-height: 75vh;
+    object-fit: contain;
+    border-radius: 20px;
+    box-shadow: 0 12px 35px #50233730;
+    border: 1px solid #ffdeeb;
 }
 
-.orbit .flower:nth-child(2) {
-    top: 50%;
-    left: auto;
-    right: -24px;
-    transform: translateY(-50%);
+audio {
+    width: 100%;
+    max-width: 340px;
+    margin: 20px auto;
 }
-
-.orbit .flower:nth-child(3) {
-    top: auto;
-    left: 50%;
-    bottom: -24px;
-    transform: translateX(-50%);
-}
-
-.orbit .flower:nth-child(4) {
-    top: 50%;
-    left: -24px;
-    transform: translateY(-50%);
-}
-
-.intro-content {
-    position: relative;
-    z-index: 3;
-    max-width: 480px;
-}
-
-.intro-content p {
-    font-size: 18px;
-}
-
-/* =================================
-   SIDE FLOWER BORDERS
-================================= */
 
 .flower-border {
     position: fixed;
     top: 0;
     bottom: 0;
-    width: 39px;
+    width: 27px;
+    pointer-events: none;
+    z-index: 5;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    align-items: center;
-    z-index: 100;
-    pointer-events: none;
     overflow: hidden;
-}
-
-.flower-border.left { left: 0; }
-.flower-border.right { right: 0; }
-
-.flower-border .flower {
-    --flower-size: 29px;
-    animation: borderSway 5s ease-in-out infinite;
-    filter: drop-shadow(0 3px 5px #c75b8044);
-}
-
-.flower-border .flower:nth-child(even) {
-    --flower-size: 22px;
-    animation-delay: -2s;
-}
-
-@keyframes borderSway {
-    0%, 100% { rotate: -10deg; }
-    50% { rotate: 10deg; }
-}
-
-/* =================================
-   ORIGINAL-STYLE BLOOM TRANSITION
-================================= */
-
-#flowerLayer {
-    position: fixed;
-    inset: 0;
-    display: none;
-    z-index: 150;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.bloom-flower {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    opacity: 0;
-    --flower-size: 34px;
-    animation: bloom 3.6s ease-out forwards;
-}
-
-@keyframes bloom {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(.1) rotate(0deg);
-    }
-    15% { opacity: 1; }
-    100% {
-        opacity: 0;
-        transform: translate(
-            calc(-50% + var(--x)),
-            calc(-50% + var(--y))
-        ) scale(var(--scale)) rotate(var(--rotate));
-    }
-}
-
-/* =================================
-   ENVELOPE
-================================= */
-
-.envelope {
-    width: min(260px, 75vw);
-    height: 165px;
-    position: relative;
-    margin: 25px auto;
-    background: #f5a2bf;
-    border-radius: 10px;
-    box-shadow: 0 12px 30px #b83f6b33;
-    cursor: pointer;
-}
-
-.envelope::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: #f8c0d4;
-    clip-path: polygon(0 0, 50% 58%, 100% 0);
-    border-radius: 10px;
-}
-
-.envelope::after {
-    content: "♥";
-    position: absolute;
-    top: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #b52e63;
-    font-size: 34px;
-}
-
-/* =================================
-   LETTER
-================================= */
-
-.letter-card {
-    width: min(100%, 570px);
-    background: #fffafc;
-    border: 1px solid #f5c5d7;
-    border-radius: 22px;
-    padding: 28px 22px;
-    box-shadow: 0 12px 35px #bd527322;
-    animation: cardAppear .7s ease;
-}
-
-@keyframes cardAppear {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.letter-text {
-    white-space: pre-line;
-    line-height: 1.9;
     font-size: 17px;
+    opacity: 0.7;
 }
 
-/* =================================
-   BOUQUET
-================================= */
+.flower-border.left { left: 2px; }
+.flower-border.right { right: 2px; }
 
-.bouquet {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 5px;
-    margin: 28px auto;
-    height: 130px;
-}
-
-.bouquet .flower {
-    --flower-size: 52px;
-    animation: bouquetSway 3s ease-in-out infinite;
-}
-
-.bouquet .flower:nth-child(2) { animation-delay: -.8s; }
-.bouquet .flower:nth-child(3) { animation-delay: -1.6s; }
-.bouquet .flower:nth-child(4) { animation-delay: -2.4s; }
-
-@keyframes bouquetSway {
-    0%, 100% { transform: rotate(-5deg) translateY(0); }
-    50% { transform: rotate(5deg) translateY(-5px); }
-}
-
-/* =================================
-   PHOTO GALLERY
-================================= */
-
-.photo-gallery {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 25px;
-    margin-top: 25px;
-}
-
-.photo-gallery img {
-    display: block;
-    width: 90%;
-    max-width: 500px;
-    height: auto;
-    object-fit: contain;
-    border-radius: 18px;
-    box-shadow: 0 8px 25px #8f365522;
-}
-
-/* =================================
-   MUSIC SCREENS
-================================= */
-
-.music-card {
-    width: min(100%, 440px);
-    padding: 30px 20px;
-    border-radius: 25px;
-    background: #ffffffcc;
-    box-shadow: 0 10px 35px #bd527322;
-}
-
-.music-disc {
-    width: 135px;
-    height: 135px;
-    margin: 22px auto;
-    border-radius: 50%;
-    background: radial-gradient(circle, #fff0f5 0 12%, #d84f83 13% 18%, #f6a8c4 19% 45%, #c63c72 46% 49%, #f8b6ce 50%);
-    box-shadow: 0 10px 25px #b83f6b44;
-    animation: discSpin 7s linear infinite;
-}
-
-.music-disc.playing {
-    animation-duration: 4s;
-}
-
-@keyframes discSpin {
-    to { transform: rotate(360deg); }
-}
-
-audio {
-    width: 100%;
-    margin-top: 18px;
-}
-
-/* =================================
-   ENDING
-================================= */
-
-#ending .content-card {
-    padding-top: 40px;
-    padding-bottom: 40px;
-}
-
-.ending-heart {
-    color: #e75480;
-    font-size: 55px;
-    animation: heartBeat 1.4s ease-in-out infinite;
-}
-
-@keyframes heartBeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.13); }
-}
-
-@media (max-width: 480px) {
-    .flower-border { width: 25px; }
-    .flower-border .flower { --flower-size: 20px; }
-    .flower-border .flower:nth-child(even) { --flower-size: 16px; }
-    .screen { padding-left: 30px; padding-right: 30px; }
-    .content-card, .letter-card { padding: 24px 16px; }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
 
 <body>
 
-<!-- FLOWER BORDERS: VISIBLE THROUGHOUT -->
-<div class="flower-border left" id="leftBorder"></div>
-<div class="flower-border right" id="rightBorder"></div>
+<div class="flower-border left">✿ ❀ ✿ ❀ ✿ ❀ ✿</div>
+<div class="flower-border right">❀ ✿ ❀ ✿ ❀ ✿ ❀</div>
 
-<!-- INTRO -->
 <section class="screen" id="intro">
-    <div class="flower-orbits" aria-hidden="true">
-        <div class="orbit">
-            <div class="flower rose"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="center"></i></div>
-            <div class="flower ivory"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="center"></i></div>
-            <div class="flower lilac"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="center"></i></div>
-            <div class="flower gold"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="center"></i></div>
-        </div>
-
-        <div class="orbit">
-            <div class="flower ivory"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="center"></i></div>
-            <div class="flower rose"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="center"></i></div>
-            <div class="flower gold"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="center"></i></div>
-            <div class="flower lilac"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="center"></i></div>
-        </div>
-
-        <div class="orbit">
-            <div class="flower gold"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="center"></i></div>
-            <div class="flower lilac"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="center"></i></div>
-            <div class="flower rose"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="center"></i></div>
-            <div class="flower ivory"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="center"></i></div>
-        </div>
+    <div class="flower-orbit">
+        <span class="orbit-flower">🌸</span>
+        <span class="orbit-flower">🌷</span>
+        <span class="orbit-flower">🌼</span>
+        <span class="orbit-flower">🌺</span>
     </div>
-
-    <div class="intro-content">
-        <h1>Hello My Hayat</h1>
-        <p>A little surprise is waiting for you.</p>
-        <button class="main-btn" onclick="startSurprise()">Tap to open</button>
-    </div>
+    <h1>Hello My Hayat</h1>
+    <p>A little surprise is waiting for you.</p>
+    <button onclick="showScreen('letterScreen')">Tap to open 💗</button>
 </section>
 
-<!-- BLOOM TRANSITION -->
-<div id="flowerLayer"></div>
-
-<!-- ENVELOPE SCREEN -->
 <section class="screen" id="letterScreen">
-    <div class="content-card">
-        <h2>A Little Letter 💌</h2>
-        <p>Something special is waiting inside.</p>
-        <div class="envelope" onclick="openLetter()" role="button" aria-label="Open letter"></div>
-        <button class="main-btn" onclick="openLetter()">Open your letter</button>
+    <div id="envelope">
+        <div class="envelope" onclick="openLetter()">💌</div>
+        <p>Tap to open your letter</p>
+    </div>
+
+    <div class="letter-card" id="letterContent" style="display:none">
+        <h2>An apology and a proud mssg form me</h2>
+        <p>Dear My Lady,</p>
+        <p>
+            Thank you for being the best person,thank u for always being by my side im so thankful
+            and im really so proud of u, u will always be my moon and a bestie,more then a frnd and
+            a bestie i wanna let u know tht im sorry i dont know how days are going so buzy but even
+            when u are buzy dont foregt to eat well give ur body rest as well no need to overpush okie
+            i hope this reaches u. Ill always be praying for u
+        </p>
+        <p>I love u, every monent and sec will i</p>
+        <button onclick="showScreen('bouquetScreen')">Continue 💗</button>
     </div>
 </section>
 
-<!-- LETTER AND PHOTOS -->
-<section class="screen" id="letterContent">
-    <div class="letter-card">
-        <h2>For My Hayat 💗</h2>
-        <div class="letter-text" id="letterText">My Hayat,
-
-I made this little surprise just for you. I hope it brings a smile to your face and reminds you how special you are.
-
-Some moments are simple, but the people we share them with make them unforgettable. I hope these memories make you smile whenever you look back at them.
-
-With lots of love. 💗</div>
-
-        <div class="bouquet">
-            <div class="flower rose"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="center"></i></div>
-            <div class="flower ivory"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="center"></i></div>
-            <div class="flower lilac"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="center"></i></div>
-            <div class="flower gold"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="center"></i></div>
-        </div>
-
-        <div class="photo-gallery">
-            <img src="{{ url_for('static', filename='photo.jpg') }}" alt="Our memory one">
-            <img src="{{ url_for('static', filename='photo2.jpg') }}" alt="Our memory two">
-            <img src="{{ url_for('static', filename='photo3.jpg') }}" alt="Our memory three">
-        </div>
-
-        <button class="main-btn" onclick="showSongOne()">Continue 💗</button>
-    </div>
+<section class="screen" id="bouquetScreen">
+    <h1>💐</h1>
+    <h2>Only for you, my lady.</h2>
+    <button onclick="showScreen('photoScreen')">Continue 💗</button>
 </section>
 
-<!-- FIRST SONG -->
-<section class="screen" id="songOne">
-    <div class="music-card">
-        <h2>Song One 🎵</h2>
-        <p>A little music for you.</p>
-        <div class="music-disc" id="discOne"></div>
-        <audio id="musicOne" controls preload="metadata">
-            <source src="{{ url_for('static', filename='music.mp3') }}" type="audio/mpeg">
-        </audio>
-        <button class="main-btn" onclick="showSongTwo()">Next song →</button>
+<section class="screen" id="photoScreen">
+    <h2>Our memories 📸</h2>
+    <div class="photo-gallery">
+        <img src="{{ url_for('static', filename='photo.jpg') }}" alt="Photo 1">
+        <img src="{{ url_for('static', filename='photo2.jpg') }}" alt="Photo 2">
+        <img src="{{ url_for('static', filename='photo3.jpg') }}" alt="Photo 3">
     </div>
+    <button onclick="showScreen('songOneScreen')">First song 🎵</button>
 </section>
 
-<!-- SECOND SONG -->
-<section class="screen" id="songTwo">
-    <div class="music-card">
-        <h2>One More Song 💕</h2>
-        <p>Enjoy this one too.</p>
-        <div class="music-disc" id="discTwo"></div>
-        <audio id="musicTwo" controls preload="metadata">
-            <source src="{{ url_for('static', filename='music2.mp3') }}" type="audio/mpeg">
-        </audio>
-        <button class="main-btn" onclick="finishSurprise()">One last thing 💗</button>
-    </div>
+<section class="screen" id="songOneScreen">
+    <h2>This song best describes you.</h2>
+    <p>I hope you listen to it and understand why I chose it for you.</p>
+    <audio id="songOne" controls>
+        <source src="{{ url_for('static', filename='music.mp3') }}" type="audio/mpeg">
+    </audio>
+    <button onclick="showScreen('songTwoScreen')">Next song 🎵</button>
 </section>
 
-<!-- ENDING -->
-<section class="screen" id="ending">
-    <div class="content-card">
-        <div class="ending-heart">♥</div>
-        <h2>That's for You, Hayat</h2>
-        <p>I hope this little surprise made you smile.</p>
-        <p>Some memories deserve their own little place. 💗</p>
-        <button class="main-btn" onclick="replaySurprise()">See it again ↻</button>
-    </div>
+<section class="screen" id="songTwoScreen">
+    <h2>And this one...</h2>
+    <p>This one reminds me of you.</p>
+    <audio id="songTwo" controls>
+        <source src="{{ url_for('static', filename='music2.mp3') }}" type="audio/mpeg">
+    </audio>
+    <button onclick="showScreen('endingScreen')">Finish 💗</button>
+</section>
+
+<section class="screen" id="endingScreen">
+    <h2>That's all.</h2>
+    <p>I hope this little surprise made your morning a little more special.</p>
 </section>
 
 <script>
-let surpriseStarted = false;
-let letterOpened = false;
-
-function makeFlower(type = "") {
-    const flower = document.createElement("div");
-    flower.className = "flower " + type;
-
-    for (let i = 0; i < 6; i++) {
-        const petal = document.createElement("i");
-        petal.className = "petal";
-        flower.appendChild(petal);
-    }
-
-    const center = document.createElement("i");
-    center.className = "center";
-    flower.appendChild(center);
-
-    return flower;
-}
-
-function fillFlowerBorders() {
-    const left = document.getElementById("leftBorder");
-    const right = document.getElementById("rightBorder");
-    const types = ["rose", "ivory", "lilac", "gold"];
-
-    left.replaceChildren();
-    right.replaceChildren();
-
-    for (let i = 0; i < 12; i++) {
-        left.appendChild(makeFlower(types[i % types.length]));
-        right.appendChild(makeFlower(types[(i + 2) % types.length]));
-    }
-}
-
 function showScreen(id) {
     document.querySelectorAll(".screen").forEach(screen => {
         screen.style.display = "none";
     });
 
-    const target = document.getElementById(id);
-    if (target) target.style.display = "flex";
+    const next = document.getElementById(id);
+    next.style.display = "flex";
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function startSurprise() {
-    if (surpriseStarted) return;
-    surpriseStarted = true;
-
-    showScreen("intro");
-
-    const intro = document.getElementById("intro");
-    intro.style.display = "none";
-
-    const layer = document.getElementById("flowerLayer");
-    layer.innerHTML = "";
-    layer.style.display = "block";
-    layer.style.opacity = "1";
-    layer.style.transition = "none";
-
-    const types = ["rose", "ivory", "lilac", "gold"];
-    const total = 90;
-
-    for (let i = 0; i < total; i++) {
-        const flower = makeFlower(types[Math.floor(Math.random() * types.length)]);
-        flower.classList.add("bloom-flower");
-
-        const angle = -(Math.PI * 2 * i / total) - (i * 0.18);
-        const distance = 180 + Math.random() * 650;
-
-        flower.style.setProperty("--x", `${Math.cos(angle) * distance}px`);
-        flower.style.setProperty("--y", `${Math.sin(angle) * distance}px`);
-        flower.style.setProperty("--scale", 0.5 + Math.random() * 1.2);
-        flower.style.setProperty("--rotate", `${Math.random() * 720 - 360}deg`);
-        flower.style.animationDelay = `${Math.random() * 0.5}s`;
-
-        layer.appendChild(flower);
-    }
-
-    setTimeout(() => {
-        layer.style.transition = "opacity 1s ease";
-        layer.style.opacity = "0";
-
-        setTimeout(() => {
-            layer.style.display = "none";
-            layer.style.opacity = "1";
-            layer.style.transition = "none";
-            showScreen("letterScreen");
-        }, 1000);
-    }, 3600);
+    document.querySelectorAll("audio").forEach(audio => {
+        if (!next.contains(audio)) {
+            audio.pause();
+        }
+    });
 }
 
 function openLetter() {
-    if (letterOpened) return;
-    letterOpened = true;
-
-    startFallingFlowers();
-    showScreen("letterContent");
+    document.getElementById("envelope").style.display = "none";
+    document.getElementById("letterContent").style.display = "block";
 }
+</script>
 
-function startFallingFlowers() {
-    // Keeps the experience lightweight on mobile.
-    const old = document.getElementById("fallingFlowers");
-    if (old) old.remove();
-
-    const layer = document.createElement("div");
-    layer.id = "fallingFlowers";
-    layer.style.cssText =
-        "position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:5;";
-
-    document.body.appendChild(layer);
-
-    const types = ["rose", "ivory", "lilac", "gold"];
-
-    for (let i = 0; i < 18; i++) {
-        const flower = makeFlower(types[i % types.length]);
-        flower.style.position = "absolute";
-        flower.style.left = Math.random() * 100 + "vw";
-        flower.style.top = "-50px";
-        flower.style.setProperty("--flower-size", (18 + Math.random() * 15) + "px");
-        flower.style.opacity = "0.7";
-        flower.style.transition = `top ${5 + Math.random() * 5}s linear, transform 6s linear`;
-
-        layer.appendChild(flower);
-
-        requestAnimationFrame(() => {
-            flower.style.top = "
+</body>
+</html>
