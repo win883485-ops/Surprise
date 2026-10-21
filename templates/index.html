@@ -196,38 +196,23 @@ button {
 
 @keyframes fallFlower {
     0% {
-        transform:
-            translateY(-60px)
-            translateX(0)
-            rotate(0deg);
+        transform: translateY(-60px) translateX(0) rotate(0deg);
     }
 
     25% {
-        transform:
-            translateY(25vh)
-            translateX(25px)
-            rotate(90deg);
+        transform: translateY(25vh) translateX(25px) rotate(90deg);
     }
 
     50% {
-        transform:
-            translateY(50vh)
-            translateX(-20px)
-            rotate(180deg);
+        transform: translateY(50vh) translateX(-20px) rotate(180deg);
     }
 
     75% {
-        transform:
-            translateY(75vh)
-            translateX(25px)
-            rotate(270deg);
+        transform: translateY(75vh) translateX(25px) rotate(270deg);
     }
 
     100% {
-        transform:
-            translateY(110vh)
-            translateX(-15px)
-            rotate(360deg);
+        transform: translateY(110vh) translateX(-15px) rotate(360deg);
     }
 }
 
@@ -345,42 +330,28 @@ button {
 /* PHOTOS */
 
 .photo-gallery {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 22px;
-    margin: 25px auto;
-    width: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 25px !important;
+    width: 100% !important;
+    margin: 35px auto !important;
+    position: relative;
+    z-index: 10;
 }
 
-.gallery-photo {
-    display: block;
-    width: 100%;
-    max-width: 280px;
-    height: auto;
-    border-radius: 16px;
+.photo-gallery img {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 90% !important;
+    max-width: 500px !important;
+    height: auto !important;
+    min-height: 100px;
+    object-fit: contain;
+    border-radius: 18px;
     box-shadow: 0 8px 25px #a6426530;
-    animation: photoAppear 1.5s ease both;
-}
-
-.gallery-photo:nth-child(2) {
-    animation-delay: .3s;
-}
-
-.gallery-photo:nth-child(3) {
-    animation-delay: .6s;
-}
-
-@keyframes photoAppear {
-    from {
-        opacity: 0;
-        transform: translateY(25px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 /* NEXT BUTTON */
@@ -461,7 +432,6 @@ audio {
 
 <body>
 
-<!-- INTRO -->
 <section id="intro">
     <h1>Hello My Hayat</h1>
     <p>A little surprise is waiting for you.</p>
@@ -471,12 +441,8 @@ audio {
     </button>
 </section>
 
-
-<!-- FIRST FLOWER BLOOM -->
 <div id="flowerLayer"></div>
 
-
-<!-- ENVELOPE -->
 <section id="letterScreen">
 
     <div class="envelope-wrapper" onclick="openLetter()">
@@ -492,12 +458,8 @@ audio {
 
 </section>
 
-
-<!-- FALLING FLOWERS -->
 <div id="fallingFlowers"></div>
 
-
-<!-- LETTER -->
 <section id="letterContent">
 
     <div class="letter-card">
@@ -515,9 +477,6 @@ i hope this reaches u. Ill always be praying for u
 
 I love u, every monent and sec will i
         </div>
-
-
-        <!-- BOUQUET -->
 
         <div class="bouquet-section">
 
@@ -537,18 +496,17 @@ I love u, every monent and sec will i
 
         </div>
 
-
         <!-- PHOTOS -->
 
         <div class="photo-gallery">
 
-          <img src="{{ url_for('static', filename='photo.jpg') }}" alt="Photo 1">
-<img src="{{ url_for('static', filename='photo2.jpg') }}" alt="Photo 2">
-<img src="{{ url_for('static', filename='photo3.jpg') }}" alt="Photo 3">
-            
+            <img src="{{ url_for('static', filename='photo.jpg') }}" alt="Photo 1">
+
+            <img src="{{ url_for('static', filename='photo2.jpg') }}" alt="Photo 2">
+
+            <img src="{{ url_for('static', filename='photo3.jpg') }}" alt="Photo 3">
 
         </div>
-
 
         <button class="main-btn continue-btn" onclick="showSongOne()">
             Continue
@@ -558,8 +516,6 @@ I love u, every monent and sec will i
 
 </section>
 
-
-<!-- SONG 1 -->
 <section id="songOne" class="music-screen">
 
     <div class="music-box">
@@ -590,8 +546,6 @@ I love u, every monent and sec will i
 
 </section>
 
-
-<!-- SONG 2 -->
 <section id="songTwo" class="music-screen">
 
     <div class="music-box">
@@ -620,8 +574,6 @@ I love u, every monent and sec will i
 
 </section>
 
-
-<!-- END -->
 <section id="ending">
 
     <h1>That's all.</h1>
@@ -632,14 +584,10 @@ I love u, every monent and sec will i
 
 </section>
 
-
 <script>
 
 let letterOpened = false;
 let surpriseStarted = false;
-
-
-/* START SURPRISE */
 
 function startSurprise() {
 
@@ -671,9 +619,6 @@ function startSurprise() {
 
     }, 3600);
 }
-
-
-/* BLOOM FLOWERS */
 
 function createBloomFlowers() {
 
@@ -732,9 +677,6 @@ function createBloomFlowers() {
     }
 }
 
-
-/* OPEN LETTER */
-
 function openLetter() {
 
     if (letterOpened) return;
@@ -747,9 +689,6 @@ function openLetter() {
 
     startFallingFlowers();
 }
-
-
-/* FALLING FLOWERS */
 
 function startFallingFlowers() {
 
@@ -794,9 +733,6 @@ function startFallingFlowers() {
     }
 }
 
-
-/* SONG 1 */
-
 function showSongOne() {
 
     document.getElementById("letterContent").style.display = "none";
@@ -804,11 +740,7 @@ function showSongOne() {
     document.getElementById("songOne").style.display = "flex";
 
     window.scrollTo(0, 0);
-
 }
-
-
-/* SONG 2 */
 
 function showSongTwo() {
 
@@ -822,11 +754,7 @@ function showSongTwo() {
     document.getElementById("songTwo").style.display = "flex";
 
     window.scrollTo(0, 0);
-
 }
-
-
-/* FINISH */
 
 function finishSurprise() {
 
@@ -842,20 +770,13 @@ function finishSurprise() {
     document.getElementById("ending").style.display = "flex";
 
     window.scrollTo(0, 0);
-
 }
-
-
-/* WHEN SONG 1 ENDS */
 
 document.getElementById("musicOne").addEventListener("ended", function() {
 
     document.getElementById("songOneNext").style.display = "inline-block";
 
 });
-
-
-/* WHEN SONG 2 ENDS */
 
 document.getElementById("musicTwo").addEventListener("ended", function() {
 
@@ -866,4 +787,4 @@ document.getElementById("musicTwo").addEventListener("ended", function() {
 </script>
 
 </body>
-</html>
+    </html>
