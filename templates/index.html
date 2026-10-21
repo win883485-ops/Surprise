@@ -474,6 +474,154 @@ audio {
     .screen { padding-left: 30px; padding-right: 30px; }
     .content-card, .letter-card { padding: 24px 16px; }
 }
+
+/* PREMIUM FLOWER ORBIT + ALL-SCREEN BORDERS */
+
+#intro {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+#intro h1,
+#intro p,
+#intro .main-btn {
+    position: relative;
+    z-index: 3;
+}
+
+.orbit-scene {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.orbit-ring {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border: 1px solid #c76a9130;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: premiumOrbit 32s linear infinite;
+}
+
+.orbit-ring.ring-one {
+    width: 112vmin;
+    height: 112vmin;
+}
+
+.orbit-ring.ring-two {
+    width: 76vmin;
+    height: 76vmin;
+    animation-duration: 24s;
+}
+
+@keyframes premiumOrbit {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(-360deg);
+    }
+}
+
+.premium-flower {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0 3px 5px #a6426520);
+}
+
+.premium-petal {
+    position: absolute;
+    width: 11px;
+    height: 17px;
+    left: 10px;
+    top: 0;
+    border-radius: 70% 70% 45% 45%;
+    transform-origin: 6px 16px;
+    background: linear-gradient(145deg, #fffafd, #e9a1bc);
+}
+
+.premium-flower:nth-child(even) .premium-petal {
+    background: linear-gradient(145deg, #fff4d9, #e9a0ad);
+}
+
+.premium-center {
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    left: 11px;
+    top: 11px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff1b7, #c78b45);
+    box-shadow: 0 0 5px #e4b56a70;
+}
+
+.flower-border {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 44px;
+    z-index: 20;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0.88;
+}
+
+.flower-border.left {
+    left: 0;
+}
+
+.flower-border.right {
+    right: 0;
+}
+
+.border-flower {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    left: 7px;
+    animation: borderSway 5s ease-in-out infinite;
+}
+
+.flower-border.right .border-flower {
+    animation-delay: -2s;
+}
+
+@keyframes borderSway {
+    0%, 100% {
+        transform: rotate(-8deg) translateY(0);
+    }
+    50% {
+        transform: rotate(8deg) translateY(-5px);
+    }
+}
+
+@media (max-width: 480px) {
+    .flower-border {
+        width: 28px;
+        opacity: 0.72;
+    }
+
+    .border-flower {
+        left: 1px;
+        transform: scale(0.8);
+    }
+
+    .flower-border.right .border-flower {
+        left: -3px;
+    }
+
+    .premium-flower {
+        transform: translate(-50%, -50%) scale(0.85);
+    }
+}
+    
 </style>
 </head>
 
@@ -484,7 +632,16 @@ audio {
 <div class="flower-border right" id="rightBorder"></div>
 
 <!-- INTRO -->
+
 <section class="screen" id="intro">
+
+    <div class="orbit-scene" aria-hidden="true">
+        <div class="orbit-ring ring-one"></div>
+        <div class="orbit-ring ring-two"></div>
+    </div>
+
+    <!-- Your existing intro content stays here -->
+    
     <div class="flower-orbits" aria-hidden="true">
         <div class="orbit">
             <div class="flower rose"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="center"></i></div>
